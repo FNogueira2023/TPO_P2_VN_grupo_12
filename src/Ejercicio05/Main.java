@@ -11,47 +11,57 @@ import java.util.List;
 import java.util.Random;
 
 public class Main {
+    //      2.5.4 / 2.5.5
     public static void main(String[] args) {
+
+
         SetCoordenadas set = conjuntoCoordenadas();
 
         double radio = 1.0;
-        RegionCuadrada region = new RegionCuadrada(new Coordenada(100,150), 50);
+        RegionCuadrada region = new RegionCuadrada(new Coordenada(100, 150), 50);
         MonteCarlo monteCarlo = new MonteCarlo(region);
 
-        double piAproximado = aproximarPI(set,monteCarlo);
+        double piAproximado = aproximarPI(set, monteCarlo);
         System.out.println(piAproximado);
     }
 
+    //  2.5.1 Algoritmo
     public static IStack OrderedUniqueStack(IStack IStack) {
-        IStack result = new DynamicIStack();
-        ISet setAux = new DynamicSet();
-        List<Integer> listAux = new ArrayList<>();
+        IStack result = new DynamicIStack(); // O(C)
+        ISet setAux = new DynamicSet(); // O(C)
+        List<Integer> listAux = new ArrayList<>(); // O(C)
 
-        while (!IStack.isEmpty()) {
-            int element = IStack.getTop();
-            setAux.add(element);
-            IStack.remove();
+        while (!IStack.isEmpty()) { // O(n)
+            int element = IStack.getTop(); // O(C)
+            setAux.add(element); // O(C)
+            IStack.remove(); // O(C)
         }
 
-        while (!setAux.isEmpty()) {
-            int element = setAux.choose();
-            listAux.add(element);
-            setAux.remove(element);
+        while (!setAux.isEmpty()) { // O(n)
+            int element = setAux.choose(); // O(C)
+            listAux.add(element); // O(C)
+            setAux.remove(element); // O(C)
         }
 
-        Collections.sort(listAux);
-        for (int element : listAux) {
-            result.add(element);
+        Collections.sort(listAux); // O(nlog(n))
+
+        for (int element : listAux) { // O(n)
+            result.add(element); // O(C)
         }
 
-        return result;
+        return result; // O(C)
     }
 
-    public static double aproximarPI(SetCoordenadas coordenadas, MonteCarlo monteCarlo){
+//  total: O(C)+O(n)+O(n)+O(nlog(n))+O(n) = O(nlog(n))
+
+
+
+
+    public static double aproximarPI(SetCoordenadas coordenadas, MonteCarlo monteCarlo) {
         int totalPuntos = size(coordenadas);
         double radio = (double) monteCarlo.getRegion().getLongitudLado() / 2;
 
-        while(!coordenadas.isEmpty()){
+        while (!coordenadas.isEmpty()) {
             Coordenada coordenada = coordenadas.choose();
             monteCarlo.agregarCoordenada(coordenada);
             coordenadas.remove(coordenada);
@@ -64,11 +74,11 @@ public class Main {
         SetCoordenadas set = new SetCoordenadas();
         Random random = new Random();
 
-        while(size(set) <= 1000){
+        while (size(set) <= 1000) {
             int x = random.nextInt(1000);
             int y = random.nextInt(1000);
 
-            Coordenada coordenada = new Coordenada(x,y);
+            Coordenada coordenada = new Coordenada(x, y);
             set.add(coordenada);
         }
         return set;

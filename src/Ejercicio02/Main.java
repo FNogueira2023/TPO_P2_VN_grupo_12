@@ -5,6 +5,7 @@ public class Main {
 
     }
 
+//  2.2.1
     public static void reverseGenericStack(GenericStack<Object> stack) {
         GenericStack<Object> aux = new GenericStack<>();
 
@@ -18,6 +19,8 @@ public class Main {
         }
     }
 
+
+//  2.2.2
     public static GenericSet<Object> copyGenericSet(GenericSet<Object> set) {
         GenericSet<Object> copy = new GenericSet<>();
         GenericSet<Object> aux = new GenericSet<>();

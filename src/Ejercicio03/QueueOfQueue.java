@@ -45,6 +45,7 @@ public class QueueOfQueue implements IQueueOfQueue {
         return array[0];
     }
 
+//  2.3.1
     @Override
     public QueueOfQueue concatenate(List<QueueOfQueue> instances) {
         QueueOfQueue result = new QueueOfQueue();
@@ -62,6 +63,7 @@ public class QueueOfQueue implements IQueueOfQueue {
         return result;
     }
 
+//  2.3.2
     @Override
     public Queue flat() {
         Queue result = new Queue();
@@ -75,6 +77,7 @@ public class QueueOfQueue implements IQueueOfQueue {
         return result;
     }
 
+//  2.3.3
     @Override
     public void reverseWithDepth(QueueOfQueue queueOfQueue, Queue[] array) {
 

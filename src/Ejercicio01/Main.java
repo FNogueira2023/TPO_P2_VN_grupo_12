@@ -5,124 +5,82 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        QueueOfStacks queue = new QueueOfStacks(3);
-
-        FixedStack stack01 = new FixedStack(3);
-        stack01.add(7);
-        stack01.add(4);
-        stack01.add(1);
-
-        FixedStack stack02 = new FixedStack(3);
-        stack02.add(8);
-        stack02.add(5);
-        stack02.add(2);
-
-        FixedStack stack03 = new FixedStack(3);
-        stack03.add(9);
-        stack03.add(6);
-        stack03.add(3);
-
-        queue.add(stack01);
-        queue.add(stack02);
-        queue.add(stack03);
-
-        QueueOfStacks queueB = new QueueOfStacks(3);
-
-        FixedStack stack001 = new FixedStack(3);
-        stack001.add(7);
-        stack001.add(4);
-        stack001.add(1);
-
-        FixedStack stack002 = new FixedStack(3);
-        stack002.add(8);
-        stack002.add(5);
-        stack002.add(2);
-
-        FixedStack stack003 = new FixedStack(3);
-        stack003.add(9);
-        stack003.add(6);
-        stack003.add(3);
-
-        queueB.add(stack001);
-        queueB.add(stack002);
-        queueB.add(stack003);
-
-
-        int[][] matriz = matrixAddition(queue,queueB);
-
-        System.out.println("Valores de la matriz:");
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                System.out.print(matriz[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-
     }
 
+    //    2.1.1
     public static List<Integer> calculateTrace(QueueOfStacks queue) {
         List<Integer> trace = new ArrayList<>();
-        int outerCounter = 0;
+        int outerCounter = 0; // O(C)
 
-        while (!queue.isEmpty()) {
-            int stackCounter = 0;
-            while (!queue.getFirst().isEmpty()) {
+        while (!queue.isEmpty()) { // O(n)
+            int stackCounter = 0; // O(C)
+            while (!queue.getFirst().isEmpty()) { // O(n)
                 if (stackCounter == outerCounter) {
-                    trace.add(queue.getFirst().getTop());
+                    trace.add(queue.getFirst().getTop()); // O(C)
                 }
-                queue.getFirst().remove();
+                queue.getFirst().remove(); // O(C)
                 stackCounter++;
             }
             outerCounter++;
-            queue.remove();
+            queue.remove(); // O(n)
         }
         return trace;
     }
 
-    public static int[][] calculateTransposed(QueueOfStacks queue) {
-        int[][] matrix = new int[queue.getMax()][queue.getMax()];
-        int lineCounter = 0;
+//   total: O(n²) + O(n) = O(n²)
 
-        while (!queue.isEmpty()) {
-            int columnCounter = 0;
-            while (!queue.getFirst().isEmpty()) {
-                matrix[lineCounter][columnCounter] = queue.getFirst().getTop();
-                queue.getFirst().remove();
+
+    //    2.1.2
+    public static int[][] calculateTransposed(QueueOfStacks queue) {
+        int[][] matrix = new int[queue.getMax()][queue.getMax()]; // O(C)
+        int lineCounter = 0; // O(C)
+
+        while (!queue.isEmpty()) { // O(n)
+            int columnCounter = 0; // O(C)
+            while (!queue.getFirst().isEmpty()) { // O(n)
+                matrix[lineCounter][columnCounter] = queue.getFirst().getTop(); // O(C)
+                queue.getFirst().remove(); // O(C)
                 columnCounter++;
             }
             lineCounter++;
-            queue.remove();
+            queue.remove(); // O(n)
         }
         return matrix;
     }
 
-    public static int[][] matrixAddition(QueueOfStacks queueA, QueueOfStacks queueB){
-        int[][] result = new int[queueA.getMax()][queueA.getMax()];
-        int columnCounter = 0;
+//    total: O(n) * O(n) + O(n) = O(n²)
 
-        while(!queueA.isEmpty()){
-            int lineCounter = 0;
-            while(!queueA.getFirst().isEmpty()){
-               result[lineCounter][columnCounter] = queueA.getFirst().getTop();
-                lineCounter++;
-                queueA.getFirst().remove();
+    //    2.1.3
+    public static int[][] matrixAddition(QueueOfStacks queueA, QueueOfStacks queueB) {
+        int[][] result = new int[queueA.getMax()][queueA.getMax()]; // O(C)
+        int columnCounter = 0; // O(1)
+
+        // Primer bucle para sumar elementos de queueA a result
+        while (!queueA.isEmpty()) { // O(n)
+            int lineCounter = 0; // O(C)
+            while (!queueA.getFirst().isEmpty()) { // O(n)
+                result[lineCounter][columnCounter] = queueA.getFirst().getTop(); // O(C)
+                lineCounter++; // O(C)
+                queueA.getFirst().remove(); // O(C)
             }
-            columnCounter++;
-            queueA.remove();
+            columnCounter++; // O(C)
+            queueA.remove(); // O(C)
         }
 
-        columnCounter = 0;
-        while(!queueB.isEmpty()){
-            int lineCounter = 0;
-            while(!queueB.getFirst().isEmpty()){
-                result[lineCounter][columnCounter] += queueB.getFirst().getTop();
-                lineCounter++;
-                queueB.getFirst().remove();
+        columnCounter = 0; // O(C)
+        // Segundo bucle para sumar elementos de queueB a result
+        while (!queueB.isEmpty()) { // O(n)
+            int lineCounter = 0; // O(C)
+            while (!queueB.getFirst().isEmpty()) { // O(n)
+                result[lineCounter][columnCounter] += queueB.getFirst().getTop(); // O(C)
+                lineCounter++; // O(C)
+                queueB.getFirst().remove(); // O(C)
             }
-            columnCounter++;
-            queueB.remove();
+            columnCounter++; // O(C)
+            queueB.remove(); // O(C)
         }
-        return result;
+        return result; // O(1)
     }
+
+//    total : O(n²)+O(n²)=O(n²)
 }
